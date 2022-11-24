@@ -1,0 +1,7 @@
+library(shinyjs)
+library(plotly)
+library(dplyr)
+library(dotwhisker)
+load("crash.RData")
+load("coeff.RData")
+load("vcov.RData")
