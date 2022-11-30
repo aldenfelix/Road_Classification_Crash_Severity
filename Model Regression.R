@@ -1,7 +1,7 @@
 rm(list = ls())
 if(!is.null(dev.list())) dev.off()
 cat("\014") 
-library(VGAM); library(xtable)
+library(VGAM); library(xtable); library(dotwhisker)
 
 load("crash_base.RData")
 crash <- crash[,c(1,2,4:7,9,15:20)]
@@ -48,5 +48,6 @@ for (i in 1:2){
   
 }
 sort(seq)
-
-
+c(3:10)[-(4:5)]
+b <- 1
+a <- if (b == 1) {TRUE} else {FALSE}
