@@ -1,9 +1,12 @@
 fluidPage(
+    
+  theme = shinytheme("flatly"),
+
   # Navbar allows for the ui to slit into multiple different pages with different layout parameters
   navbarPage(
     
     # Navbar project name that appears in the top left corner
-    "Project",
+    "Crash",
     
     # First Tab Panel that servers as a landing page to describe the basics of the data before
     # Anything else is said about the data and model ----
@@ -39,9 +42,13 @@ fluidPage(
                                   \\end{align*}"),
                          p("The regression uses a stopping ratio, which means that the regression predicts the log odds of being at or lower than 
                            the current category versus being in a higher category. Therefore, when beta is positive, the crash is less likely to be severe, while
-                           when beta is negative, the crash is more likely to severe"),
-                         
-                         
+                           when beta is negative, the crash is more likely to severe."),
+                         p("These are the reference levels for the model:"),
+                         p("Road Class - County Road"),
+                         p("Weather - Normal Weather"),
+                         p("Time of Day - Morning"),
+                         p("Type of Collision - One Car"),
+                         p("At Intersection - False")
                          )
                  )
                )
@@ -62,7 +69,7 @@ fluidPage(
                             
                             # Input: Radio Buttons for variable selection
                             radioButtons("DescRadio",
-                                         label = "Select Varaible:",
+                                         label = "Select Variable:",
                                          choices = c("Crash Severity", "Road Class", "Speed Limit", "Weather", "Time of Day", "Type of Collision", "At Intersection Flag"),
                                          selected = "Crash Severity")
                             
@@ -87,10 +94,10 @@ fluidPage(
                             
                             # Input: Radio Buttons for variable selection
                             radioButtons("DescRadio2",
-                                         label = "Select Varaible:",
+                                         label = "Select Variable:",
                                          choices = c("Crash Severity", "Road Class", "Speed Limit", "Weather", "Time of Day", "Type of Collision", "At Intersection Flag"),
-                                         selected = "Crash Severity")
-                            
+                                         selected = "Crash Severity"
+                            )
                           ),
                           mainPanel(
                             
@@ -111,7 +118,7 @@ fluidPage(
                             
                             # Input: Radio Buttons for variable selection
                             radioButtons("DescRadio3",
-                                         label = "Select Varaible:",
+                                         label = "Select Variable:",
                                          choices = c("Crash Severity", "Road Class", "Speed Limit", "Weather", "Time of Day", "Type of Collision", "At Intersection Flag"),
                                          selected = "Crash Severity")
                             
@@ -140,9 +147,13 @@ fluidPage(
                    # Input: check-box for models
                    checkboxGroupInput("InfCoefCheck",
                                       label = "Select Models:",
-                                      choices = c("Stage 1", "Stage 2", "Stage 3", "Stage 4"),
-                                      selected = c("Stage 1", "Stage 2", "Stage 3", "Stage 4")
-                   )
+                                      choices = c("Stage 1", "Stage 2", "Stage 3", "Stage 4", "All"),
+                                      selected = c("Stage 1", "Stage 2", "Stage 3", "Stage 4", "All")
+                   ),
+                   
+                   # Download Button
+                   downloadButton("InfCoefDwn",
+                                  label = "Download")
                  ),
                  
                 # Output Panel
@@ -186,6 +197,11 @@ fluidPage(
                              selected = "Stage"
                 ),
                 
+                # Input: Invert Probabilities
+                checkboxInput("InfProbInv",
+                              label = "Invert Probability",
+                              value = F
+                ),
                  
                 # Input: Radio Buttons for Intersection Flag
                 radioButtons("InfInterInput",
@@ -230,7 +246,9 @@ fluidPage(
                              min = 1,
                              max = 10,
                              value = 5),
-                downloadButton("InfCoefDwn",
+                
+                # Download Button
+                downloadButton("InfProbDwn",
                                label = "Download")
                   
                  
